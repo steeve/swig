@@ -11,6 +11,10 @@
 #include <string.h>
 #include <sys/types.h>
 
+#if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
+#include <winsock2.h>
+#include <windows.h>
+#endif
 %}
 
 #if SWIGGO_INTGO_SIZE == 32
@@ -56,12 +60,49 @@ swiggo_size_assert(double, 8)
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
+
+void (*crosscall2)(void (*fn)(void *, int), void *, int);
+char* (*_cgo_topofstack)(void);
+void (*_cgo_allocate)(void *, int);
+void (*_cgo_panic)(void *, int);
+
+#else // defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
+
 extern void crosscall2(void (*fn)(void *, int), void *, int);
 extern char* _cgo_topofstack(void) __attribute__ ((weak));
 extern void _cgo_allocate(void *, int);
 extern void _cgo_panic(void *, int);
+
+#endif // defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
+
 #ifdef __cplusplus
 }
+#endif
+
+#if defined(_WIN32) || defined(__WIN32__) || defined(__CYGWIN__)
+# ifdef __cplusplus
+extern "C" {
+# endif
+BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
+{
+    switch (fdwReason)
+    {
+        case DLL_PROCESS_ATTACH:
+            /* Symbols are in the .exe file */
+            HMODULE hModule = GetModuleHandle(NULL);
+            crosscall2 = (void (*)(void (*fn)(void *, int), void *, int))GetProcAddress(hModule, "crosscall2");
+            _cgo_topofstack = (char* (*)(void))GetProcAddress(hModule, "_cgo_topofstack");
+            _cgo_allocate = (void (*)(void *, int))GetProcAddress(hModule, "_cgo_allocate");
+            _cgo_panic = (void (*)(void *, int))GetProcAddress(hModule, "_cgo_panic");
+            break;
+    }
+    return TRUE;
+}
+# ifdef __cplusplus
+}
+# endif
 #endif
 
 static char *_swig_topofstack() {
