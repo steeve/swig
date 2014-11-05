@@ -5,6 +5,9 @@ See the RELEASENOTES file for a summary of changes in each release.
 Version 3.0.5 (31 Jan 2015)
 ===========================
 
+2014-02-13: steeve
+            [Go] Ensure structs are properly packed between 8/6c and GCC/clang.
+
 2015-01-30: wsfulton
             [Python] Fix Python -classic and property setting. Setting properties on classic classes
             was broken in swig-3.0.3 by attempting to use __setattr__. This regression is fixed now
