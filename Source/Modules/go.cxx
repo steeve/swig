@@ -997,7 +997,7 @@ private:
 	} else {
 	  Printv(f_go_wrappers, "\tvar _swig_p uintptr\n", NULL);
 	}
-	Printv(f_go_wrappers, "\t_cgo_runtime_cgocall(", wname, ", _swig_p)\n", NULL);
+	Printv(f_go_wrappers, "\t_cgo_runtime_cgocall(unsafe.Pointer(*(*uintptr)(unsafe.Pointer(", wname, "))), _swig_p)\n", NULL);
 	Printv(f_go_wrappers, "\treturn\n", NULL);
 	Printv(f_go_wrappers, "}", NULL);
       }
@@ -1255,7 +1255,7 @@ private:
       } else {
 	Printv(f_go_wrappers, "\t_swig_p := uintptr(unsafe.Pointer(&", first, "))\n", NULL);
       }
-      Printv(f_go_wrappers, "\t_cgo_runtime_cgocall(", wname, ", _swig_p)\n", NULL);
+      Printv(f_go_wrappers, "\t_cgo_runtime_cgocall(unsafe.Pointer(*(*uintptr)(unsafe.Pointer(", wname, "))), _swig_p)\n", NULL);
       Printv(f_go_wrappers, "\treturn\n", NULL);
       Printv(f_go_wrappers, "}", NULL);
     }
@@ -2820,7 +2820,7 @@ private:
       if (!gccgo_flag) {
 	Printv(f_go_wrappers, " {\n", NULL);
 	Printv(f_go_wrappers, "\t_swig_p := uintptr(unsafe.Pointer(&_swig_director))\n", NULL);
-	Printv(f_go_wrappers, "\t_cgo_runtime_cgocall(", wname, ", _swig_p)\n", NULL);
+	Printv(f_go_wrappers, "\t_cgo_runtime_cgocall(unsafe.Pointer(*(*uintptr)(unsafe.Pointer(", wname, "))), _swig_p)\n", NULL);
 	Printv(f_go_wrappers, "\treturn\n", NULL);
 	Printv(f_go_wrappers, "}", NULL);
       }
@@ -3326,7 +3326,7 @@ private:
 	if (!gccgo_flag) {
 	  Printv(f_go_wrappers, " {\n", NULL);
 	  Printv(f_go_wrappers, "\t_swig_p := uintptr(unsafe.Pointer(&_swig_ptr))\n", NULL);
-	  Printv(f_go_wrappers, "\t_cgo_runtime_cgocall(", upcall_wname, ", _swig_p)\n", NULL);
+	  Printv(f_go_wrappers, "\t_cgo_runtime_cgocall(unsafe.Pointer(*(*uintptr)(unsafe.Pointer(", upcall_wname, "))), _swig_p)\n", NULL);
 	  Printv(f_go_wrappers, "\treturn\n", NULL);
 	  Printv(f_go_wrappers, "}", NULL);
 	}
