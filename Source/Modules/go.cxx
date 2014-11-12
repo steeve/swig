@@ -1366,7 +1366,7 @@ private:
 
     // Start the function definition.
 
-    Printv(f->def, "void\n", wname, "(void *swig_v)\n", "{\n", NULL);
+    Printv(f->def, "SWIGEXPORT void\n", wname, "(void *swig_v)\n", "{\n", NULL);
 
     // The single function parameter is a pointer to the real argument
     // values.  Define the structure that it points to.
