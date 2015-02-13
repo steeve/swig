@@ -1409,7 +1409,7 @@ private:
       Delete(ct);
       Delete(ln);
     }
-    Printv(f->code, "\t} *swig_a = (struct swigargs *) swig_v;\n", NULL);
+    Printv(f->code, "\t} SWIGSTRUCTPACKED *swig_a = (struct swigargs *) swig_v;\n", NULL);
 
     Printv(f->code, "\n", NULL);
 
@@ -3062,7 +3062,7 @@ private:
 
     if (!is_ignored) {
       if (!gccgo_flag) {
-	Printv(f_c_directors, "  struct { void *p; } a;\n", NULL);
+	Printv(f_c_directors, "  struct { void *p; } SWIGSTRUCTPACKED a;\n", NULL);
 	Printv(f_c_directors, "  a.p = go_val;\n", NULL);
 	Printv(f_c_directors, "  crosscall2(", wname, ", &a, (int) sizeof a);\n", NULL);
 
@@ -3947,7 +3947,7 @@ private:
 	    Delete(rname);
 	  }
 
-	  Printv(w->code, "  } swig_a;\n", NULL);
+	  Printv(w->code, "  } SWIGSTRUCTPACKED swig_a;\n", NULL);
 	  Printv(w->code, "  swig_a.go_val = go_val;\n", NULL);
 
 	  p = parms;
