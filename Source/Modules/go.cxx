@@ -2509,7 +2509,7 @@ private:
     Setattr(var, "type", var_type);
 
     SwigType *vt = Copy(var_type);
-    if (SwigType_isclass(vt)) {
+    if (Strcmp(Getattr(var, "tmap:gotype"), "string") != 0 && SwigType_isclass(vt)) {
       SwigType_add_pointer(vt);
     }
 
